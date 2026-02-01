@@ -1,57 +1,111 @@
-# Student Management System
+# 🎓 Student Management System
 
-A simple, humane, and clean OOP-based CRUD backend for managing students.
-Built with Node.js, Express, and TypeScript, following the Controller-Service-Repository pattern.
+A robust, clean, and object-oriented backend API for managing student records.  
+Built with **Node.js**, **Express**, **TypeScript**, and **MongoDB (Mongoose)**.
 
-## Features
+---
 
--   **CRUD Operations**: Create, Get (List + Single), Update, Delete students.
--   **Search & Filtering**: Filter list by name.
--   **Sorting**: Sort list by fields (e.g., ?sortBy=grade).
--   **Pagination**: Limit and offset support (e.g., ?page=1&limit=10).
--   **Clean OOP Architecture**: Separated concerns (Route -> Controller -> Service -> Repository).
--   **In-Memory Database**: Simple and portable, no external database setup required.
--   **Authentication (Bonus)**: Simple header-based check (`x-api-key`).
+## 🚀 Features
 
-## Setup
+-   **Create, Read, Update, Delete (CRUD)**: Full lifecycle management for student data.
+-   **Advanced Search**: Filter students by name or email.
+-   **Sorting & Pagination**: Efficiently handle large datasets with flexible sort options and page limits.
+-   **Security**: Simple API Key authentication implementation.
+-   **Clean Architecture**: Follows strict **Controller-Service-Repository** pattern.
+-   **Type Safety**: Fully typed with TypeScript.
 
-1.  **Install Dependencies**:
+---
+
+## 🛠️ Tech Stack
+
+-   **Runtime**: Node.js
+-   **Language**: TypeScript
+-   **Framework**: Express.js
+-   **Database**: MongoDB
+-   **ODM**: Mongoose
+
+---
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+-   [Node.js](https://nodejs.org/) (v16+)
+-   [MongoDB](https://www.mongodb.com/) running locally on port `27017`
+
+### Steps
+
+1.  **Clone the repository**
+    ```bash
+    git clone <repository-url>
+    cd StudentManagementSystem
+    ```
+
+2.  **Install Dependencies**
     ```bash
     npm install
     ```
 
-2.  **Start the Server**:
+3.  **Start the Server**
     ```bash
     npm start
     ```
-    Server will run on `http://localhost:3000`.
+    > The server will start on **http://localhost:4000**
 
-## API Endpoints
+---
 
-### Authentication
-Include header `x-api-key: secret-token` in all requests to access protected routes (all routes).
+## 📡 API Documentation
 
-### Students
+**Authentication**: All endpoints require the header:
+`x-api-key: secret-token`
 
--   **Create Student**
-    -   `POST /api/students`
-    -   Body: `{ "name": "John Doe", "age": 20, "email": "john@example.com", "grade": "A" }`
+### Student Endpoints
 
--   **Get All Students**
-    -   `GET /api/students`
-    -   Query Params:
-        -   `search`: Filter by name.
-        -   `sortBy`: Field to sort by (e.g., `age`).
-        -   `order`: `asc` or `desc` (default `asc`).
-        -   `page`: Page number (default 1).
-        -   `limit`: Items per page (default 10).
+| Method | Endpoint | Description | Query Params |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/students` | Create a new student | - |
+| `GET` | `/api/students` | Get all students | `search`, `sortBy`, `order`, `page`, `limit` |
+| `GET` | `/api/students/:id` | Get student by ID | - |
+| `PUT` | `/api/students/:id` | Update a student | - |
+| `DELETE` | `/api/students/:id` | Delete a student | - |
 
--   **Get Student by ID**
-    -   `GET /api/students/:id`
+### Example Usage
 
--   **Update Student**
-    -   `PUT /api/students/:id`
-    -   Body: `{ "grade": "A+" }`
+**1. Create a Student**
+```bash
+curl -X POST http://localhost:4000/api/students \
+  -H "x-api-key: secret-token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Jane Doe",
+    "email": "jane@example.com",
+    "age": 22,
+    "grade": "A"
+  }'
+```
 
--   **Delete Student**
-    -   `DELETE /api/students/:id`
+**2. List Students (Sorted by Age, Descending)**
+```bash
+curl -H "x-api-key: secret-token" \
+  "http://localhost:4000/api/students?sortBy=age&order=desc"
+```
+
+---
+
+## 📂 Project Structure
+
+```bash
+src/
+├── app.ts           # Application Setup & config
+├── server.ts        # Entry point
+├── controllers/     # Request Handlers
+├── services/        # Business Logic
+├── repositories/    # Database Access Layer
+├── models/          # Mongoose Schemas & Types
+├── routes/          # API Route Definitions
+└── middlewares/     # Auth & Error Handling
+```
+
+---
+
+## 📝 License
+This project is open source and available under the [ISC License](LICENSE).
